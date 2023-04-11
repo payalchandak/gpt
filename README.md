@@ -1,4 +1,4 @@
-# gpt
+# An interface to query OpenAI's GPT model
 
 Need a YAML file called `gpt.yaml` with the `openai` information filled in. This file is not committed to protect API keys. 
 
