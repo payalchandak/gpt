@@ -1,6 +1,6 @@
 # An interface to query OpenAI's GPT model
 
-Need a YAML file called `gpt.yaml` with the `openai` information filled in. This file is not committed to protect API keys. 
+Need a YAML file called `gpt.yaml` with the `openai` information filled in. This file is not provided to protect API keys. 
 
 ```YAML
 gpt: 
@@ -14,3 +14,4 @@ gpt:
   system_prompt: You are a helpful assistant.
   log_dir: ${hydra:run.dir}
 ```
+The `GPT` class provides functionality to query GPT 4 in a chat interface while logging all conversations. A demo for using `GPT` is provided in `run.py`.
