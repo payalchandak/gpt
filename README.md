@@ -14,4 +14,4 @@ gpt:
   system_prompt: You are a helpful assistant.
   log_dir: ${hydra:run.dir}
 ```
-The `GPT` class provides functionality to query GPT 4 in a chat interface while logging all conversations. A demo for using `GPT` is provided in `run.py`.
+The `GPT` class provides functionality to query GPT 4 in a chat interface while logging all conversations and automatically retrying after a RateLimitError from OpenAI. A demo for using `GPT` is provided in `run.py`.
