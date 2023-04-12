@@ -1,8 +1,12 @@
 import os
 import json
 import openai
+import logging
 from datetime import datetime
 from tenacity import retry, stop_after_attempt, wait_random_exponential # type: ignore # see https://github.com/openai/openai-cookbook for instructions 
+
+# Configure the logging level for the openai library
+logging.getLogger("openai").setLevel(logging.ERROR)
 
 class GPT: 
     
@@ -20,7 +24,10 @@ class GPT:
     def ask(self, question, verbose=False, store_chat_history=True): 
         messages = self.chat + [{"role": "user", "content": question}]
         response = openai.ChatCompletion.create(engine=self.engine, messages=messages, temperature=self.temperature)
-        reply = response['choices'][0]['message']['content']
+        if response['choices'][0]['finish_reason'] != 'stop':
+            reply = response['choices'][0]['finish_reason']
+        else: 
+            reply = response['choices'][0]['message']['content']
         updated_chat = messages + [{"role": "assistant", "content": reply},]
         self.log(updated_chat)
         if store_chat_history: self.chat = updated_chat
