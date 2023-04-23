@@ -31,7 +31,7 @@ gpt:
   log_dir: ${hydra:run.dir}
 ```
 
-## Tutorials 
+## Usage and Tutorials 
 
 ### Python
 ```python
