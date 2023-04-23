@@ -1,0 +1,10 @@
+gpt: 
+  _target_: gpt4.GPT
+  openai_api_type: azure 
+  openai_api_base: https://zak1.openai.azure.com/
+  openai_api_version: 2023-03-15-preview
+  openai_api_key: 
+  engine: largeGPT4
+  temperature: 0.7
+  system_prompt: You are a helpful assistant.
+  log_dir: ${hydra:run.dir}
