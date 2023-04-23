@@ -1,4 +1,4 @@
-# An interface to query OpenAI's GPT model
+# An interface to query OpenAI's GPT 4 model
 
 The `GPT` class provides functionality to query GPT 4 in a chat interface with the following features. Demos for using `GPT` can be found in `run.py` and `run.ipynb`. 
 
@@ -8,7 +8,15 @@ The `GPT` class provides functionality to query GPT 4 in a chat interface with t
 - **Retry** The`tenacity` library automatically retries GPT when encountering RateLimitErrors from OpenAI
 - **Logging** The `hydra` library creates a new logging directory each time GPT is initialized and logs each query made to GPT 4 
 
-You will need to a YAML file called `gpt.yaml` with the `openai` information filled in. Fill in the OpenAI infomration (such as API key) here. 
+## Getting Started 
+
+```bash
+pip install openai
+pip install tenacity
+pip install hydra-core --upgrade
+```
+
+:exclamation: Note, that you will need to fill in the `gpt.yaml` file with your OpenAI information such as the API key. 
 
 ```YAML
 gpt: 
@@ -23,7 +31,7 @@ gpt:
   log_dir: ${hydra:run.dir}
 ```
 
-Use in a python script like this 
+## Demo for Python script 
 
 ```python
 import hydra
@@ -38,9 +46,10 @@ if __name__ == "__main__":
     experiment()
 ```
 
-and in a jupyter notebook like this
+## Demo for Jupyter notebook 
 
 ```python
+import os
 import hydra 
 from omegaconf import OmegaConf
 from gpt4 import GPT 
