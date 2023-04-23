@@ -31,22 +31,24 @@ gpt:
   log_dir: ${hydra:run.dir}
 ```
 
-## Demo for Python script 
+## Tutorials 
 
+### Python
 ```python
 import hydra
 from omegaconf import DictConfig, OmegaConf
+from gpt4 import GPT 
 
 @hydra.main(version_base=None, config_path=".", config_name="gpt")
 def experiment(cfg): 
     gpt = hydra.utils.instantiate(cfg.gpt)
-    _ = gpt.ask('What year is it?', verbose=True)
+    reply = gpt.ask('What year is it?', verbose=True, store_chat_history=False)
 
 if __name__ == "__main__":
     experiment()
 ```
 
-## Demo for Jupyter notebook 
+### Jupyter notebook 
 
 ```python
 import os
@@ -55,9 +57,9 @@ from omegaconf import OmegaConf
 from gpt4 import GPT 
 
 with hydra.initialize(version_base=None, config_path="."):
-    cfg = hydra.compose(con fig_name="gpt", return_hydra_config=True, overrides=["gpt.log_dir=${hydra.run.dir}"])
+    cfg = hydra.compose(config_name="gpt", return_hydra_config=True, overrides=["gpt.log_dir=${hydra.run.dir}"])
     os.makedirs(cfg.gpt.log_dir, exist_ok=True)
 
 gpt = hydra.utils.instantiate(cfg.gpt)
-_ = gpt.ask('What year is it?', verbose=True)
+reply = gpt.ask('What year is it?', verbose=True, store_chat_history=False)
 ```
