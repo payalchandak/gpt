@@ -59,4 +59,5 @@ with hydra.initialize(version_base=None, config_path="."):
     os.makedirs(cfg.gpt.log_dir, exist_ok=True)
 
 gpt = hydra.utils.instantiate(cfg.gpt)
+_ = gpt.ask('What year is it?', verbose=True)
 ```
