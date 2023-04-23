@@ -4,13 +4,14 @@ import openai
 import logging
 from datetime import datetime
 from tenacity import retry, stop_after_attempt, wait_random_exponential # type: ignore # see https://github.com/openai/openai-cookbook for instructions 
-
-# Configure the logging level for the openai library
-logging.getLogger("openai").setLevel(logging.ERROR)
+logging.getLogger("openai").setLevel(logging.ERROR) # Configure the logging level for the openai library to avoid printing RateLimitErrors 
 
 class GPT: 
     
     def __init__(self,openai_api_type,openai_api_base,openai_api_version,openai_api_key,log_dir,engine,system_prompt,temperature): 
+        '''
+        All of these arguments are expected to be defined in the gpt.yaml config file
+        '''
         openai.api_type = openai_api_type
         openai.api_base = openai_api_base
         openai.api_version = openai_api_version
@@ -22,6 +23,20 @@ class GPT:
 
     @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(7))
     def ask(self, question, verbose=False, store_chat_history=True): 
+        '''
+        Asks GPT 4 a question and returns a reply. 
+        The question is appended to self.chat which contains a system prompt by default and any other questions and replies that may have been previously stored. 
+        
+        Parameters 
+            
+            question (str) : The prompt to give GPT 
+            verbose (bool) : Whether to print GPT's response
+            store_chat_history (bool) : Whether to append the question and reply to self.chat, thereby creating a "history" of the conversation
+            
+        Returns 
+            
+            reply (str) : The content of the response from GPT or a reason that prevented GPT from responding such as "content_filter"
+        '''
         messages = self.chat + [{"role": "user", "content": question}]
         response = openai.ChatCompletion.create(engine=self.engine, messages=messages, temperature=self.temperature)
         if response['choices'][0]['finish_reason'] != 'stop':
@@ -35,6 +50,9 @@ class GPT:
         return reply
     
     def log(self, chat): 
+        '''
+        Dumps the entire chat history into the logging directory specified by hydra.
+        '''
         current = datetime.now()
         savepath = self.log_dir+'/'+str(current)+'.txt'
         with open(savepath,'w') as f: 
