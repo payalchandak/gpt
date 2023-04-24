@@ -1,12 +1,12 @@
 # An interface to query OpenAI's GPT 4 model
 
-The `GPT` class provides functionality to query GPT 4 in a chat interface with the following features. Demos for using `GPT` can be found in `run.py` and `run.ipynb`. 
+The `GPT` class provides functionality to query GPT 4 in code with the following features:
 
 - **Ask** `GPT` has a `ask` function which can be used to interact with GPT 4  
-- **Chat interface** The `store_chat_history` argument allows you to track messages and replies  
+- **Chat interface** The `store_chat_history` parameter in `ask` allows you to track messages history  
 - **Configuration** A file called `gpt.yaml` that is used to initialize `GPT` with your API key, temperature, etc...
 - **Retry** The`tenacity` library automatically retries the query when encountering RateLimitErrors from OpenAI
-- **Logging** The `hydra` library creates a new logging directory each time `GPT` is initialized and logs chat history by date
+- **Logging** The `hydra` library creates a new logging directory each time `GPT` is initialized and logs conversations by date
 
 ## Getting Started 
 
